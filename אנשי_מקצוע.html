@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אנשי מקצוע מומלצים</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f4f1;
+    color: #222;
+    direction: rtl;
+  }
+
+  header {
+    background: linear-gradient(135deg, #3a6b47, #5a9c6e);
+    color: white;
+    text-align: center;
+    padding: 28px 20px 20px;
+  }
+  header h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: 0.5px; }
+  header p  { margin-top: 6px; opacity: 0.85; font-size: 0.95rem; }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    background: #2d5237;
+    padding: 12px 16px;
+  }
+  .tab-btn {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.4);
+    color: rgba(255,255,255,0.85);
+    padding: 8px 18px;
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover  { background: rgba(255,255,255,0.15); }
+  .tab-btn.active { background: white; color: #2d5237; font-weight: 700; border-color: white; }
+
+  /* Search bar */
+  .search-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    background: white;
+    padding: 14px 20px;
+    border-bottom: 1px solid #dde8de;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+  .search-bar label { font-weight: 600; color: #3a6b47; white-space: nowrap; }
+  .search-bar input,
+  .search-bar select {
+    border: 1.5px solid #b8d4bf;
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    direction: rtl;
+  }
+  .search-bar input { flex: 1; min-width: 180px; }
+  .search-bar select { min-width: 150px; }
+  .search-bar input:focus,
+  .search-bar select:focus { border-color: #3a6b47; }
+
+  .btn-clear {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 16px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: background 0.2s;
+  }
+  .btn-clear:hover { background: #c0392b; }
+
+  .count-badge {
+    background: #eef3ee;
+    color: #3a6b47;
+    border: 1px solid #b8d4bf;
+    border-radius: 16px;
+    padding: 4px 14px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* Cards grid */
+  .content { padding: 20px; max-width: 1200px; margin: 0 auto; }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border: 1px solid #e0ebe2;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    position: relative;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(58,107,71,0.15);
+    border-color: #5a9c6e;
+  }
+
+  .card-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2d5237;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #eef3ee;
+    padding-bottom: 8px;
+  }
+
+  .card-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 5px;
+    font-size: 0.88rem;
+    align-items: flex-start;
+  }
+  .card-label {
+    color: #3a6b47;
+    font-weight: 600;
+    white-space: nowrap;
+    min-width: 60px;
+  }
+  .card-value { color: #444; }
+
+  .tag {
+    display: inline-block;
+    background: #eef3ee;
+    color: #2d5237;
+    border-radius: 12px;
+    padding: 2px 10px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-top: 8px;
+    margin-left: 4px;
+  }
+
+  .card-links { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #f0f4f1;
+    border: 1px solid #b8d4bf;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 0.82rem;
+    color: #3a6b47;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .link-btn:hover { background: #d4e8d8; }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+    font-size: 1.1rem;
+  }
+  .empty-state span { font-size: 3rem; display: block; margin-bottom: 12px; }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: white;
+    border-radius: 18px;
+    padding: 32px;
+    max-width: 540px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+  }
+  .modal-close:hover { background: #ddd; }
+
+  .modal-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2d5237;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #eef3ee;
+  }
+  .modal-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    align-items: flex-start;
+  }
+  .modal-label {
+    color: #3a6b47;
+    font-weight: 700;
+    min-width: 80px;
+    white-space: nowrap;
+  }
+  .modal-value { color: #333; line-height: 1.5; }
+  .modal-links { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .modal-link-btn {
+    background: #3a6b47;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 9px 20px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .modal-link-btn:hover { background: #2d5237; }
+  .modal-link-btn.secondary {
+    background: #eef3ee;
+    color: #3a6b47;
+    border: 1px solid #b8d4bf;
+  }
+  .modal-link-btn.secondary:hover { background: #d4e8d8; }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.4rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .search-bar { flex-direction: column; align-items: stretch; }
+    .search-bar input, .search-bar select { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>אנשי מקצוע מומלצים</h1>
+  <p>חפש, סנן וצור קשר בקלות</p>
+</header>
+
+<div class="tabs" id="tabs"></div>
+
+<div class="search-bar">
+  <label>חיפוש:</label>
+  <input type="text" id="searchInput" placeholder="חפש שם, כתובת, התמחות..." oninput="applyFilters()">
+  <label>התמחות:</label>
+  <select id="filterHitmaheut" onchange="applyFilters()"><option value="">הכל</option></select>
+  <label>גישה:</label>
+  <select id="filterGisha" onchange="applyFilters()"><option value="">הכל</option></select>
+  <button class="btn-clear" onclick="clearFilters()">נקה סינון</button>
+  <span class="count-badge" id="countBadge">0 תוצאות</span>
+</div>
+
+<div class="content">
+  <div class="cards-grid" id="cardsGrid"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-name" id="modalName"></div>
+    <div id="modalBody"></div>
+    <div class="modal-links" id="modalLinks"></div>
+  </div>
+</div>
+
+<script>
+const DATA = {
+  "מטפלים ופסיכיאטריים": [
+    ["אורנית שחר ","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","אישית","תרפיה קוגנטיבית התנהגותית",""],
+    ["תמר אוריאלי קורן","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","זוגית ואישית","דינמית",""],
+    ["אביטל בדש","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","אישית","חשיבה הכרתית",""],
+    ["אפרת שושן קידר","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","אישית נוער","פסיכודרמה ותרפיה דיאלקטית התנהגותית",""]
+  ],
+  "עורכי דין ומגשרים": [
+    ["אורנית שחר ","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","אישית","תרפיה קוגנטיבית התנהגותית",""],
+    ["תמר אוריאלי קורן","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","זוגית ואישית","דינמית",""],
+    ["אביטל בדש","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","אישית","חשיבה הכרתית",""],
+    ["אפרת שושן קידר","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","אישית נוער","פסיכודרמה ותרפיה דיאלקטית התנהגותית",""]
+  ],
+  "רפואה משלימה": [
+    ["אורנית שחר ","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","אישית","תרפיה קוגנטיבית התנהגותית",""],
+    ["תמר אוריאלי קורן","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","זוגית ואישית","דינמית",""],
+    ["אביטל בדש","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","אישית","חשיבה הכרתית",""],
+    ["אפרת שושן קידר","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","אישית נוער","פסיכודרמה ותרפיה דיאלקטית התנהגותית",""]
+  ],
+  "ליווי מקצועי ועסקי": [
+    ["אורנית שחר ","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","אישית","תרפיה קוגנטיבית התנהגותית",""],
+    ["תמר אוריאלי קורן","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","זוגית ואישית","דינמית",""],
+    ["אביטל בדש","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","אישית","חשיבה הכרתית",""],
+    ["אפרת שושן קידר","נחל זוהר 13 מודיעין","547353235","ruthie.lax@gmail.com","ruthielax@co.il","אישית נוער","פסיכודרמה ותרפיה דיאלקטית התנהגותית",""]
+  ]
+};
+
+const COLS = ["שם","כתובת קליניקה","נייד","אימייל","אתר","התמחות","גישה","סרטון הכרות"];
+const sheets = Object.keys(DATA);
+let currentSheet = sheets[0];
+
+// Build tabs
+const tabsEl = document.getElementById('tabs');
+sheets.forEach(s => {
+  const btn = document.createElement('button');
+  btn.className = 'tab-btn' + (s === currentSheet ? ' active' : '');
+  btn.textContent = s;
+  btn.onclick = () => switchSheet(s);
+  tabsEl.appendChild(btn);
+});
+
+function switchSheet(sheet) {
+  currentSheet = sheet;
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', sheets[i] === sheet);
+  });
+  updateFilters();
+  applyFilters();
+}
+
+function updateFilters() {
+  const rows = DATA[currentSheet];
+  const hitSet = [...new Set(rows.map(r => r[5]).filter(Boolean))].sort();
+  const gishaSet = [...new Set(rows.map(r => r[6]).filter(Boolean))].sort();
+
+  const hEl = document.getElementById('filterHitmaheut');
+  const gEl = document.getElementById('filterGisha');
+  hEl.innerHTML = '<option value="">הכל</option>' + hitSet.map(v => `<option>${v}</option>`).join('');
+  gEl.innerHTML = '<option value="">הכל</option>' + gishaSet.map(v => `<option>${v}</option>`).join('');
+}
+
+function applyFilters() {
+  const query = document.getElementById('searchInput').value.trim().toLowerCase();
+  const hitmaheut = document.getElementById('filterHitmaheut').value;
+  const gisha = document.getElementById('filterGisha').value;
+
+  const results = DATA[currentSheet].filter(row => {
+    if (hitmaheut && row[5] !== hitmaheut) return false;
+    if (gisha && row[6] !== gisha) return false;
+    if (query && !row.some(v => v.toLowerCase().includes(query))) return false;
+    return true;
+  });
+
+  renderCards(results);
+  document.getElementById('countBadge').textContent = `${results.length} תוצאות`;
+}
+
+function renderCards(rows) {
+  const grid = document.getElementById('cardsGrid');
+  if (rows.length === 0) {
+    grid.innerHTML = '<div class="empty-state"><span>🔍</span>לא נמצאו תוצאות</div>';
+    return;
+  }
+  grid.innerHTML = rows.map((row, i) => {
+    const tags = [row[5], row[6]].filter(Boolean).map(t => `<span class="tag">${t}</span>`).join('');
+    const links = buildCardLinks(row);
+    return `
+      <div class="card" onclick="openModal(${DATA[currentSheet].indexOf(row)})">
+        <div class="card-name">${row[0] || '—'}</div>
+        ${row[1] ? `<div class="card-row"><span class="card-label">כתובת:</span><span class="card-value">${row[1]}</span></div>` : ''}
+        ${row[2] ? `<div class="card-row"><span class="card-label">נייד:</span><span class="card-value">${row[2]}</span></div>` : ''}
+        <div>${tags}</div>
+        <div class="card-links">${links}</div>
+      </div>`;
+  }).join('');
+}
+
+function buildCardLinks(row) {
+  let links = '';
+  if (row[2]) links += `<a class="link-btn" href="tel:${row[2]}" onclick="event.stopPropagation()">📞 התקשר</a>`;
+  if (row[3]) links += `<a class="link-btn" href="mailto:${row[3]}" onclick="event.stopPropagation()">✉️ אימייל</a>`;
+  if (row[4]) links += `<a class="link-btn" href="${row[4].startsWith('http') ? row[4] : 'https://'+row[4]}" target="_blank" onclick="event.stopPropagation()">🌐 אתר</a>`;
+  return links;
+}
+
+function openModal(idx) {
+  const row = DATA[currentSheet][idx];
+  document.getElementById('modalName').textContent = row[0] || '—';
+
+  const fields = [
+    ['כתובת', row[1]], ['נייד', row[2]], ['אימייל', row[3]],
+    ['אתר', row[4]], ['התמחות', row[5]], ['גישה', row[6]], ['סרטון', row[7]]
+  ];
+  document.getElementById('modalBody').innerHTML = fields
+    .filter(([,v]) => v)
+    .map(([k,v]) => `<div class="modal-row"><span class="modal-label">${k}:</span><span class="modal-value">${v}</span></div>`)
+    .join('');
+
+  let links = '';
+  if (row[2]) links += `<a class="modal-link-btn" href="tel:${row[2]}">📞 התקשר</a>`;
+  if (row[3]) links += `<a class="modal-link-btn secondary" href="mailto:${row[3]}">✉️ שלח אימייל</a>`;
+  if (row[4]) links += `<a class="modal-link-btn secondary" href="${row[4].startsWith('http') ? row[4] : 'https://'+row[4]}" target="_blank">🌐 פתח אתר</a>`;
+  if (row[7]) links += `<a class="modal-link-btn secondary" href="${row[7]}" target="_blank">🎬 סרטון</a>`;
+  document.getElementById('modalLinks').innerHTML = links;
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modalOverlay')) return;
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function clearFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('filterHitmaheut').value = '';
+  document.getElementById('filterGisha').value = '';
+  applyFilters();
+}
+
+// Init
+updateFilters();
+applyFilters();
+</script>
+</body>
+</html>
